@@ -9,7 +9,6 @@ lazy val root = (project in file("."))
     name := "kappa",
     version := "0.1.0",
     scalaVersion := "2.13.14",
-    scalaVersion := "2.12.19",
     libraryDependencies ++= Seq(
       commonConfig// Common dependency across microservices
       // Add other common dependencies here if needed
@@ -28,16 +27,15 @@ lazy val producer = (project in file("producer"))
       circeCore,
       circeGeneric,
       circeParser,
-      munit
+      munit,
+      akkaHttp,    // Added Akka HTTP dependency for WebSocket communication
+      akkaStream    // Added Akka Streams dependency for streaming data handling
       // Add producer-specific dependencies here
     ),
     testFrameworks += new TestFramework("munit.Framework"),
-
-    // sbt-assembly settings
     assembly / assemblyMergeStrategy := {
       case PathList("META-INF", xs @ _*) => MergeStrategy.discard
       case x => MergeStrategy.first
     },
     assembly / mainClass := Some("producer.Producer") // Replace with your actual main class
-
   )

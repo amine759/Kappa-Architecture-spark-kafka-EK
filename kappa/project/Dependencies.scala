@@ -22,5 +22,14 @@ object Dependencies {
   val elasticsearchRestClient = "org.elasticsearch.client" % "elasticsearch-rest-high-level-client" % "7.17.0"
 
   // Configuration
-  val commonConfig= "com.typesafe" % "config" % "1.4.1"
+  val commonConfig = "com.typesafe" % "config" % "1.4.1"
+
+  // Akka HTTP for WebSocket
+  val AkkaVersion = "2.7.0"
+  val AkkaHttpVersion = "10.5.0"
+  // Akka HTTP for WebSocket
+  val akkaHttp = "com.typesafe.akka" %% "akka-http" % AkkaHttpVersion 
+  // Akka Streams for handling streaming data
+  val akkaStream = "com.typesafe.akka" %% "akka-stream" % AkkaVersion
+  // Akka HTTP for WebSocket
 }
