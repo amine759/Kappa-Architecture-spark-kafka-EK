@@ -29,8 +29,13 @@ lazy val producer = (project in file("producer"))
       circeParser,
       munit,
       akkaHttp,    // Added Akka HTTP dependency for WebSocket communication
-      akkaStream    // Added Akka Streams dependency for streaming data handling
+      akkaStream,   // Added Akka Streams dependency for streaming data handling
       // Add producer-specific dependencies here
+      akkaActor,
+      "io.circe" %% "circe-core" % "0.14.5",
+      "io.circe" %% "circe-generic" % "0.14.5",
+      "io.circe" %% "circe-parser" % "0.14.5",
+      "io.spray" %% "spray-json" % "1.3.6"
     ),
     testFrameworks += new TestFramework("munit.Framework"),
     assembly / assemblyMergeStrategy := {

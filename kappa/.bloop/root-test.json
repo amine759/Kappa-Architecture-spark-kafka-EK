@@ -6,47 +6,48 @@
         "workspaceDir": "/home/rugal/Documents/amine759/Kappa-Architecture-spark-kafka-EK/kappa",
         "sources": [
             "/home/rugal/Documents/amine759/Kappa-Architecture-spark-kafka-EK/kappa/src/test/scala",
-            "/home/rugal/Documents/amine759/Kappa-Architecture-spark-kafka-EK/kappa/src/test/scala-2.12",
+            "/home/rugal/Documents/amine759/Kappa-Architecture-spark-kafka-EK/kappa/src/test/scala-2.13",
             "/home/rugal/Documents/amine759/Kappa-Architecture-spark-kafka-EK/kappa/src/test/scala-2",
             "/home/rugal/Documents/amine759/Kappa-Architecture-spark-kafka-EK/kappa/src/test/java",
-            "/home/rugal/Documents/amine759/Kappa-Architecture-spark-kafka-EK/kappa/target/scala-2.12/src_managed/test"
+            "/home/rugal/Documents/amine759/Kappa-Architecture-spark-kafka-EK/kappa/target/scala-2.13/src_managed/test"
         ],
         "dependencies": [
             "root",
             "producer-test"
         ],
         "classpath": [
-            "/home/rugal/Documents/amine759/Kappa-Architecture-spark-kafka-EK/kappa/.bloop/root/scala-2.12/classes",
-            "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala-library/2.12.19/scala-library-2.12.19.jar",
+            "/home/rugal/Documents/amine759/Kappa-Architecture-spark-kafka-EK/kappa/.bloop/root/scala-2.13/classes",
+            "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala-library/2.13.14/scala-library-2.13.14.jar",
             "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/config/1.4.1/config-1.4.1.jar"
         ],
         "out": "/home/rugal/Documents/amine759/Kappa-Architecture-spark-kafka-EK/kappa/.bloop/root",
-        "classesDir": "/home/rugal/Documents/amine759/Kappa-Architecture-spark-kafka-EK/kappa/.bloop/root/scala-2.12/test-classes",
+        "classesDir": "/home/rugal/Documents/amine759/Kappa-Architecture-spark-kafka-EK/kappa/.bloop/root/scala-2.13/test-classes",
         "resources": [
             "/home/rugal/Documents/amine759/Kappa-Architecture-spark-kafka-EK/kappa/src/test/resources",
-            "/home/rugal/Documents/amine759/Kappa-Architecture-spark-kafka-EK/kappa/target/scala-2.12/resource_managed/test"
+            "/home/rugal/Documents/amine759/Kappa-Architecture-spark-kafka-EK/kappa/target/scala-2.13/resource_managed/test"
         ],
         "scala": {
             "organization": "org.scala-lang",
             "name": "scala-compiler",
-            "version": "2.12.19",
+            "version": "2.13.14",
             "options": [
                 
             ],
             "jars": [
-                "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala-library/2.12.19/scala-library-2.12.19.jar",
-                "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala-compiler/2.12.19/scala-compiler-2.12.19.jar",
-                "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala-reflect/2.12.19/scala-reflect-2.12.19.jar",
-                "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-xml_2.12/2.2.0/scala-xml_2.12-2.2.0.jar",
-                "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/jline/jline/2.14.6/jline-2.14.6.jar"
+                "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala-library/2.13.14/scala-library-2.13.14.jar",
+                "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala-compiler/2.13.14/scala-compiler-2.13.14.jar",
+                "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala-reflect/2.13.14/scala-reflect-2.13.14.jar",
+                "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/io/github/java-diff-utils/java-diff-utils/4.12/java-diff-utils-4.12.jar",
+                "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/org/jline/jline/3.25.1/jline-3.25.1.jar",
+                "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/net/java/dev/jna/jna/5.14.0/jna-5.14.0.jar"
             ],
             "setup": {
                 "order": "mixed",
-                "addLibraryToBootClasspath": true,
+                "addLibraryToBootClasspath": false,
                 "addCompilerToClasspath": false,
                 "addExtraJarsToClasspath": false,
-                "manageBootClasspath": true,
-                "filterLibraryFromClasspath": true
+                "manageBootClasspath": false,
+                "filterLibraryFromClasspath": false
             }
         },
         "java": {
@@ -116,7 +117,7 @@
         "platform": {
             "name": "jvm",
             "config": {
-                "home": "/usr/lib/jvm/java-17-openjdk-amd64",
+                "home": "/usr/lib/jvm/java-11-openjdk-amd64",
                 "options": [
                     "-Duser.dir=/home/rugal/Documents/amine759/Kappa-Architecture-spark-kafka-EK/kappa"
                 ]
@@ -130,17 +131,17 @@
                 {
                     "organization": "org.scala-lang",
                     "name": "scala-library",
-                    "version": "2.12.19",
+                    "version": "2.13.14",
                     "configurations": "default",
                     "artifacts": [
                         {
                             "name": "scala-library",
-                            "path": "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala-library/2.12.19/scala-library-2.12.19.jar"
+                            "path": "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala-library/2.13.14/scala-library-2.13.14.jar"
                         },
                         {
                             "name": "scala-library",
                             "classifier": "sources",
-                            "path": "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala-library/2.12.19/scala-library-2.12.19-sources.jar"
+                            "path": "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala-library/2.13.14/scala-library-2.13.14-sources.jar"
                         }
                     ]
                 },
@@ -164,17 +165,17 @@
                 {
                     "organization": "org.scala-lang",
                     "name": "scala-library",
-                    "version": "2.12.19",
+                    "version": "2.13.14",
                     "configurations": "optional",
                     "artifacts": [
                         {
                             "name": "scala-library",
-                            "path": "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala-library/2.12.19/scala-library-2.12.19.jar"
+                            "path": "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala-library/2.13.14/scala-library-2.13.14.jar"
                         },
                         {
                             "name": "scala-library",
                             "classifier": "sources",
-                            "path": "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala-library/2.12.19/scala-library-2.12.19-sources.jar"
+                            "path": "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala-library/2.13.14/scala-library-2.13.14-sources.jar"
                         }
                     ]
                 }

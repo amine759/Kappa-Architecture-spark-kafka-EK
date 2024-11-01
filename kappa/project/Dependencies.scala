@@ -31,5 +31,6 @@ object Dependencies {
   val akkaHttp = "com.typesafe.akka" %% "akka-http" % AkkaHttpVersion 
   // Akka Streams for handling streaming data
   val akkaStream = "com.typesafe.akka" %% "akka-stream" % AkkaVersion
-  // Akka HTTP for WebSocket
+  val akkaActor = "com.typesafe.akka" %% "akka-actor" % AkkaVersion
+   // Akka HTTP for WebSocket
 }

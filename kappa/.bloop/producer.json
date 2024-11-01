@@ -1,0 +1,713 @@
+{
+    "version": "1.4.0",
+    "project": {
+        "name": "producer",
+        "directory": "/home/rugal/Documents/amine759/Kappa-Architecture-spark-kafka-EK/kappa/producer",
+        "workspaceDir": "/home/rugal/Documents/amine759/Kappa-Architecture-spark-kafka-EK/kappa",
+        "sources": [
+            "/home/rugal/Documents/amine759/Kappa-Architecture-spark-kafka-EK/kappa/producer/src/main/scala",
+            "/home/rugal/Documents/amine759/Kappa-Architecture-spark-kafka-EK/kappa/producer/src/main/scala-2.12",
+            "/home/rugal/Documents/amine759/Kappa-Architecture-spark-kafka-EK/kappa/producer/src/main/scala-2",
+            "/home/rugal/Documents/amine759/Kappa-Architecture-spark-kafka-EK/kappa/producer/src/main/java",
+            "/home/rugal/Documents/amine759/Kappa-Architecture-spark-kafka-EK/kappa/producer/target/scala-2.12/src_managed/main"
+        ],
+        "dependencies": [
+            
+        ],
+        "classpath": [
+            "/home/rugal/.sbt/boot/scala-2.12.20/lib/scala-library.jar",
+            "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/org/apache/kafka/kafka-clients/3.5.2/kafka-clients-3.5.2.jar",
+            "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/ch/qos/logback/logback-classic/1.2.10/logback-classic-1.2.10.jar",
+            "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-collection-compat_2.12/2.10.0/scala-collection-compat_2.12-2.10.0.jar",
+            "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/io/circe/circe-core_2.12/0.14.3/circe-core_2.12-0.14.3.jar",
+            "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/io/circe/circe-generic_2.12/0.14.3/circe-generic_2.12-0.14.3.jar",
+            "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/io/circe/circe-parser_2.12/0.14.3/circe-parser_2.12-0.14.3.jar",
+            "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/akka/akka-http_2.12/10.5.0/akka-http_2.12-10.5.0.jar",
+            "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/akka/akka-stream_2.12/2.7.0/akka-stream_2.12-2.7.0.jar",
+            "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/com/github/luben/zstd-jni/1.5.5-1/zstd-jni-1.5.5-1.jar",
+            "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/org/lz4/lz4-java/1.8.0/lz4-java-1.8.0.jar",
+            "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/org/xerial/snappy/snappy-java/1.1.10.5/snappy-java-1.1.10.5.jar",
+            "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/org/slf4j/slf4j-api/1.7.36/slf4j-api-1.7.36.jar",
+            "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/ch/qos/logback/logback-core/1.2.10/logback-core-1.2.10.jar",
+            "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/io/circe/circe-numbers_2.12/0.14.3/circe-numbers_2.12-0.14.3.jar",
+            "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/org/typelevel/cats-core_2.12/2.8.0/cats-core_2.12-2.8.0.jar",
+            "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/com/chuusai/shapeless_2.12/2.3.10/shapeless_2.12-2.3.10.jar",
+            "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/io/circe/circe-jawn_2.12/0.14.3/circe-jawn_2.12-0.14.3.jar",
+            "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/akka/akka-http-core_2.12/10.5.0/akka-http-core_2.12-10.5.0.jar",
+            "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/akka/akka-actor_2.12/2.7.0/akka-actor_2.12-2.7.0.jar",
+            "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/akka/akka-protobuf-v3_2.12/2.7.0/akka-protobuf-v3_2.12-2.7.0.jar",
+            "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/org/reactivestreams/reactive-streams/1.0.4/reactive-streams-1.0.4.jar",
+            "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/ssl-config-core_2.12/0.4.3/ssl-config-core_2.12-0.4.3.jar",
+            "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/org/typelevel/cats-kernel_2.12/2.8.0/cats-kernel_2.12-2.8.0.jar",
+            "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/org/typelevel/jawn-parser_2.12/1.4.0/jawn-parser_2.12-1.4.0.jar",
+            "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/akka/akka-parsing_2.12/10.5.0/akka-parsing_2.12-10.5.0.jar",
+            "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/config/1.4.2/config-1.4.2.jar",
+            "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-java8-compat_2.12/0.8.0/scala-java8-compat_2.12-0.8.0.jar",
+            "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-parser-combinators_2.12/1.1.2/scala-parser-combinators_2.12-1.1.2.jar"
+        ],
+        "out": "/home/rugal/Documents/amine759/Kappa-Architecture-spark-kafka-EK/kappa/.bloop/producer",
+        "classesDir": "/home/rugal/Documents/amine759/Kappa-Architecture-spark-kafka-EK/kappa/.bloop/producer/scala-2.12/classes",
+        "resources": [
+            "/home/rugal/Documents/amine759/Kappa-Architecture-spark-kafka-EK/kappa/producer/src/main/resources",
+            "/home/rugal/Documents/amine759/Kappa-Architecture-spark-kafka-EK/kappa/producer/target/scala-2.12/resource_managed/main"
+        ],
+        "scala": {
+            "organization": "org.scala-lang",
+            "name": "scala-compiler",
+            "version": "2.12.20",
+            "options": [
+                
+            ],
+            "jars": [
+                "/home/rugal/.sbt/boot/scala-2.12.20/lib/scala-library.jar",
+                "/home/rugal/.sbt/boot/scala-2.12.20/lib/scala-compiler.jar",
+                "/home/rugal/.sbt/boot/scala-2.12.20/lib/scala-reflect.jar",
+                "/home/rugal/.sbt/boot/scala-2.12.20/lib/scala-xml_2.12-2.3.0.jar"
+            ],
+            "setup": {
+                "order": "mixed",
+                "addLibraryToBootClasspath": true,
+                "addCompilerToClasspath": false,
+                "addExtraJarsToClasspath": false,
+                "manageBootClasspath": true,
+                "filterLibraryFromClasspath": true
+            }
+        },
+        "java": {
+            "options": [
+                
+            ]
+        },
+        "test": {
+            "frameworks": [
+                {
+                    "names": [
+                        "org.scalacheck.ScalaCheckFramework"
+                    ]
+                },
+                {
+                    "names": [
+                        "org.specs2.runner.Specs2Framework",
+                        "org.specs2.runner.SpecsFramework"
+                    ]
+                },
+                {
+                    "names": [
+                        "org.specs.runner.SpecsFramework"
+                    ]
+                },
+                {
+                    "names": [
+                        "org.scalatest.tools.Framework",
+                        "org.scalatest.tools.ScalaTestFramework"
+                    ]
+                },
+                {
+                    "names": [
+                        "com.novocode.junit.JUnitFramework"
+                    ]
+                },
+                {
+                    "names": [
+                        "munit.Framework"
+                    ]
+                },
+                {
+                    "names": [
+                        "zio.test.sbt.ZTestFramework"
+                    ]
+                },
+                {
+                    "names": [
+                        "weaver.framework.CatsEffect"
+                    ]
+                },
+                {
+                    "names": [
+                        "hedgehog.sbt.Framework"
+                    ]
+                },
+                {
+                    "names": [
+                        "munit.Framework"
+                    ]
+                }
+            ],
+            "options": {
+                "excludes": [
+                    
+                ],
+                "arguments": [
+                    
+                ]
+            }
+        },
+        "platform": {
+            "name": "jvm",
+            "config": {
+                "home": "/usr/lib/jvm/java-11-openjdk-amd64",
+                "options": [
+                    "-Duser.dir=/home/rugal/Documents/amine759/Kappa-Architecture-spark-kafka-EK/kappa"
+                ]
+            },
+            "mainClass": [
+                
+            ],
+            "runtimeConfig": {
+                "home": "/usr/lib/jvm/java-11-openjdk-amd64",
+                "options": [
+                    "-Duser.dir=/home/rugal/Documents/amine759/Kappa-Architecture-spark-kafka-EK/kappa"
+                ]
+            },
+            "classpath": [
+                "/home/rugal/Documents/amine759/Kappa-Architecture-spark-kafka-EK/kappa/.bloop/producer/scala-2.12/classes",
+                "/home/rugal/.sbt/boot/scala-2.12.20/lib/scala-library.jar",
+                "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/org/apache/kafka/kafka-clients/3.5.2/kafka-clients-3.5.2.jar",
+                "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/ch/qos/logback/logback-classic/1.2.10/logback-classic-1.2.10.jar",
+                "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-collection-compat_2.12/2.10.0/scala-collection-compat_2.12-2.10.0.jar",
+                "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/io/circe/circe-core_2.12/0.14.3/circe-core_2.12-0.14.3.jar",
+                "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/io/circe/circe-generic_2.12/0.14.3/circe-generic_2.12-0.14.3.jar",
+                "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/io/circe/circe-parser_2.12/0.14.3/circe-parser_2.12-0.14.3.jar",
+                "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/akka/akka-http_2.12/10.5.0/akka-http_2.12-10.5.0.jar",
+                "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/akka/akka-stream_2.12/2.7.0/akka-stream_2.12-2.7.0.jar",
+                "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/com/github/luben/zstd-jni/1.5.5-1/zstd-jni-1.5.5-1.jar",
+                "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/org/lz4/lz4-java/1.8.0/lz4-java-1.8.0.jar",
+                "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/org/xerial/snappy/snappy-java/1.1.10.5/snappy-java-1.1.10.5.jar",
+                "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/org/slf4j/slf4j-api/1.7.36/slf4j-api-1.7.36.jar",
+                "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/ch/qos/logback/logback-core/1.2.10/logback-core-1.2.10.jar",
+                "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/io/circe/circe-numbers_2.12/0.14.3/circe-numbers_2.12-0.14.3.jar",
+                "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/org/typelevel/cats-core_2.12/2.8.0/cats-core_2.12-2.8.0.jar",
+                "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/com/chuusai/shapeless_2.12/2.3.10/shapeless_2.12-2.3.10.jar",
+                "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/io/circe/circe-jawn_2.12/0.14.3/circe-jawn_2.12-0.14.3.jar",
+                "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/akka/akka-http-core_2.12/10.5.0/akka-http-core_2.12-10.5.0.jar",
+                "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/akka/akka-actor_2.12/2.7.0/akka-actor_2.12-2.7.0.jar",
+                "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/akka/akka-protobuf-v3_2.12/2.7.0/akka-protobuf-v3_2.12-2.7.0.jar",
+                "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/org/reactivestreams/reactive-streams/1.0.4/reactive-streams-1.0.4.jar",
+                "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/ssl-config-core_2.12/0.4.3/ssl-config-core_2.12-0.4.3.jar",
+                "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/org/typelevel/cats-kernel_2.12/2.8.0/cats-kernel_2.12-2.8.0.jar",
+                "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/org/typelevel/jawn-parser_2.12/1.4.0/jawn-parser_2.12-1.4.0.jar",
+                "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/akka/akka-parsing_2.12/10.5.0/akka-parsing_2.12-10.5.0.jar",
+                "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/config/1.4.2/config-1.4.2.jar",
+                "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-java8-compat_2.12/0.8.0/scala-java8-compat_2.12-0.8.0.jar",
+                "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-parser-combinators_2.12/1.1.2/scala-parser-combinators_2.12-1.1.2.jar"
+            ]
+        },
+        "resolution": {
+            "modules": [
+                {
+                    "organization": "org.scala-lang",
+                    "name": "scala-library",
+                    "version": "2.12.20",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "scala-library",
+                            "path": "/home/rugal/.sbt/boot/scala-2.12.20/lib/scala-library.jar"
+                        },
+                        {
+                            "name": "scala-library",
+                            "classifier": "sources",
+                            "path": "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala-library/2.12.20/scala-library-2.12.20-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.apache.kafka",
+                    "name": "kafka-clients",
+                    "version": "3.5.2",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "kafka-clients",
+                            "path": "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/org/apache/kafka/kafka-clients/3.5.2/kafka-clients-3.5.2.jar"
+                        },
+                        {
+                            "name": "kafka-clients",
+                            "classifier": "sources",
+                            "path": "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/org/apache/kafka/kafka-clients/3.5.2/kafka-clients-3.5.2-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "ch.qos.logback",
+                    "name": "logback-classic",
+                    "version": "1.2.10",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "logback-classic",
+                            "path": "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/ch/qos/logback/logback-classic/1.2.10/logback-classic-1.2.10.jar"
+                        },
+                        {
+                            "name": "logback-classic",
+                            "classifier": "sources",
+                            "path": "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/ch/qos/logback/logback-classic/1.2.10/logback-classic-1.2.10-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.scala-lang.modules",
+                    "name": "scala-collection-compat_2.12",
+                    "version": "2.10.0",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "scala-collection-compat_2.12",
+                            "path": "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-collection-compat_2.12/2.10.0/scala-collection-compat_2.12-2.10.0.jar"
+                        },
+                        {
+                            "name": "scala-collection-compat_2.12",
+                            "classifier": "sources",
+                            "path": "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-collection-compat_2.12/2.10.0/scala-collection-compat_2.12-2.10.0-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "io.circe",
+                    "name": "circe-core_2.12",
+                    "version": "0.14.3",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "circe-core_2.12",
+                            "path": "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/io/circe/circe-core_2.12/0.14.3/circe-core_2.12-0.14.3.jar"
+                        },
+                        {
+                            "name": "circe-core_2.12",
+                            "classifier": "sources",
+                            "path": "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/io/circe/circe-core_2.12/0.14.3/circe-core_2.12-0.14.3-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "io.circe",
+                    "name": "circe-generic_2.12",
+                    "version": "0.14.3",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "circe-generic_2.12",
+                            "path": "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/io/circe/circe-generic_2.12/0.14.3/circe-generic_2.12-0.14.3.jar"
+                        },
+                        {
+                            "name": "circe-generic_2.12",
+                            "classifier": "sources",
+                            "path": "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/io/circe/circe-generic_2.12/0.14.3/circe-generic_2.12-0.14.3-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "io.circe",
+                    "name": "circe-parser_2.12",
+                    "version": "0.14.3",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "circe-parser_2.12",
+                            "path": "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/io/circe/circe-parser_2.12/0.14.3/circe-parser_2.12-0.14.3.jar"
+                        },
+                        {
+                            "name": "circe-parser_2.12",
+                            "classifier": "sources",
+                            "path": "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/io/circe/circe-parser_2.12/0.14.3/circe-parser_2.12-0.14.3-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.typesafe.akka",
+                    "name": "akka-http_2.12",
+                    "version": "10.5.0",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "akka-http_2.12",
+                            "path": "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/akka/akka-http_2.12/10.5.0/akka-http_2.12-10.5.0.jar"
+                        },
+                        {
+                            "name": "akka-http_2.12",
+                            "classifier": "sources",
+                            "path": "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/akka/akka-http_2.12/10.5.0/akka-http_2.12-10.5.0-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.typesafe.akka",
+                    "name": "akka-stream_2.12",
+                    "version": "2.7.0",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "akka-stream_2.12",
+                            "path": "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/akka/akka-stream_2.12/2.7.0/akka-stream_2.12-2.7.0.jar"
+                        },
+                        {
+                            "name": "akka-stream_2.12",
+                            "classifier": "sources",
+                            "path": "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/akka/akka-stream_2.12/2.7.0/akka-stream_2.12-2.7.0-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.github.luben",
+                    "name": "zstd-jni",
+                    "version": "1.5.5-1",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "zstd-jni",
+                            "path": "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/com/github/luben/zstd-jni/1.5.5-1/zstd-jni-1.5.5-1.jar"
+                        },
+                        {
+                            "name": "zstd-jni",
+                            "classifier": "sources",
+                            "path": "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/com/github/luben/zstd-jni/1.5.5-1/zstd-jni-1.5.5-1-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.lz4",
+                    "name": "lz4-java",
+                    "version": "1.8.0",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "lz4-java",
+                            "path": "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/org/lz4/lz4-java/1.8.0/lz4-java-1.8.0.jar"
+                        },
+                        {
+                            "name": "lz4-java",
+                            "classifier": "sources",
+                            "path": "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/org/lz4/lz4-java/1.8.0/lz4-java-1.8.0-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.xerial.snappy",
+                    "name": "snappy-java",
+                    "version": "1.1.10.5",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "snappy-java",
+                            "path": "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/org/xerial/snappy/snappy-java/1.1.10.5/snappy-java-1.1.10.5.jar"
+                        },
+                        {
+                            "name": "snappy-java",
+                            "classifier": "sources",
+                            "path": "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/org/xerial/snappy/snappy-java/1.1.10.5/snappy-java-1.1.10.5-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.slf4j",
+                    "name": "slf4j-api",
+                    "version": "1.7.36",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "slf4j-api",
+                            "path": "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/org/slf4j/slf4j-api/1.7.36/slf4j-api-1.7.36.jar"
+                        },
+                        {
+                            "name": "slf4j-api",
+                            "classifier": "sources",
+                            "path": "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/org/slf4j/slf4j-api/1.7.36/slf4j-api-1.7.36-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "ch.qos.logback",
+                    "name": "logback-core",
+                    "version": "1.2.10",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "logback-core",
+                            "path": "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/ch/qos/logback/logback-core/1.2.10/logback-core-1.2.10.jar"
+                        },
+                        {
+                            "name": "logback-core",
+                            "classifier": "sources",
+                            "path": "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/ch/qos/logback/logback-core/1.2.10/logback-core-1.2.10-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "io.circe",
+                    "name": "circe-numbers_2.12",
+                    "version": "0.14.3",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "circe-numbers_2.12",
+                            "path": "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/io/circe/circe-numbers_2.12/0.14.3/circe-numbers_2.12-0.14.3.jar"
+                        },
+                        {
+                            "name": "circe-numbers_2.12",
+                            "classifier": "sources",
+                            "path": "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/io/circe/circe-numbers_2.12/0.14.3/circe-numbers_2.12-0.14.3-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.typelevel",
+                    "name": "cats-core_2.12",
+                    "version": "2.8.0",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "cats-core_2.12",
+                            "path": "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/org/typelevel/cats-core_2.12/2.8.0/cats-core_2.12-2.8.0.jar"
+                        },
+                        {
+                            "name": "cats-core_2.12",
+                            "classifier": "sources",
+                            "path": "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/org/typelevel/cats-core_2.12/2.8.0/cats-core_2.12-2.8.0-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.chuusai",
+                    "name": "shapeless_2.12",
+                    "version": "2.3.10",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "shapeless_2.12",
+                            "path": "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/com/chuusai/shapeless_2.12/2.3.10/shapeless_2.12-2.3.10.jar"
+                        },
+                        {
+                            "name": "shapeless_2.12",
+                            "classifier": "sources",
+                            "path": "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/com/chuusai/shapeless_2.12/2.3.10/shapeless_2.12-2.3.10-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "io.circe",
+                    "name": "circe-jawn_2.12",
+                    "version": "0.14.3",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "circe-jawn_2.12",
+                            "path": "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/io/circe/circe-jawn_2.12/0.14.3/circe-jawn_2.12-0.14.3.jar"
+                        },
+                        {
+                            "name": "circe-jawn_2.12",
+                            "classifier": "sources",
+                            "path": "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/io/circe/circe-jawn_2.12/0.14.3/circe-jawn_2.12-0.14.3-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.typesafe.akka",
+                    "name": "akka-http-core_2.12",
+                    "version": "10.5.0",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "akka-http-core_2.12",
+                            "path": "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/akka/akka-http-core_2.12/10.5.0/akka-http-core_2.12-10.5.0.jar"
+                        },
+                        {
+                            "name": "akka-http-core_2.12",
+                            "classifier": "sources",
+                            "path": "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/akka/akka-http-core_2.12/10.5.0/akka-http-core_2.12-10.5.0-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.typesafe.akka",
+                    "name": "akka-actor_2.12",
+                    "version": "2.7.0",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "akka-actor_2.12",
+                            "path": "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/akka/akka-actor_2.12/2.7.0/akka-actor_2.12-2.7.0.jar"
+                        },
+                        {
+                            "name": "akka-actor_2.12",
+                            "classifier": "sources",
+                            "path": "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/akka/akka-actor_2.12/2.7.0/akka-actor_2.12-2.7.0-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.typesafe.akka",
+                    "name": "akka-protobuf-v3_2.12",
+                    "version": "2.7.0",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "akka-protobuf-v3_2.12",
+                            "path": "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/akka/akka-protobuf-v3_2.12/2.7.0/akka-protobuf-v3_2.12-2.7.0.jar"
+                        },
+                        {
+                            "name": "akka-protobuf-v3_2.12",
+                            "classifier": "sources",
+                            "path": "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/akka/akka-protobuf-v3_2.12/2.7.0/akka-protobuf-v3_2.12-2.7.0-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.reactivestreams",
+                    "name": "reactive-streams",
+                    "version": "1.0.4",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "reactive-streams",
+                            "path": "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/org/reactivestreams/reactive-streams/1.0.4/reactive-streams-1.0.4.jar"
+                        },
+                        {
+                            "name": "reactive-streams",
+                            "classifier": "sources",
+                            "path": "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/org/reactivestreams/reactive-streams/1.0.4/reactive-streams-1.0.4-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.typesafe",
+                    "name": "ssl-config-core_2.12",
+                    "version": "0.4.3",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "ssl-config-core_2.12",
+                            "path": "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/ssl-config-core_2.12/0.4.3/ssl-config-core_2.12-0.4.3.jar"
+                        },
+                        {
+                            "name": "ssl-config-core_2.12",
+                            "classifier": "sources",
+                            "path": "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/ssl-config-core_2.12/0.4.3/ssl-config-core_2.12-0.4.3-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.typelevel",
+                    "name": "cats-kernel_2.12",
+                    "version": "2.8.0",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "cats-kernel_2.12",
+                            "path": "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/org/typelevel/cats-kernel_2.12/2.8.0/cats-kernel_2.12-2.8.0.jar"
+                        },
+                        {
+                            "name": "cats-kernel_2.12",
+                            "classifier": "sources",
+                            "path": "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/org/typelevel/cats-kernel_2.12/2.8.0/cats-kernel_2.12-2.8.0-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.typelevel",
+                    "name": "jawn-parser_2.12",
+                    "version": "1.4.0",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "jawn-parser_2.12",
+                            "path": "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/org/typelevel/jawn-parser_2.12/1.4.0/jawn-parser_2.12-1.4.0.jar"
+                        },
+                        {
+                            "name": "jawn-parser_2.12",
+                            "classifier": "sources",
+                            "path": "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/org/typelevel/jawn-parser_2.12/1.4.0/jawn-parser_2.12-1.4.0-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.typesafe.akka",
+                    "name": "akka-parsing_2.12",
+                    "version": "10.5.0",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "akka-parsing_2.12",
+                            "path": "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/akka/akka-parsing_2.12/10.5.0/akka-parsing_2.12-10.5.0.jar"
+                        },
+                        {
+                            "name": "akka-parsing_2.12",
+                            "classifier": "sources",
+                            "path": "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/akka/akka-parsing_2.12/10.5.0/akka-parsing_2.12-10.5.0-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.typesafe",
+                    "name": "config",
+                    "version": "1.4.2",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "config",
+                            "path": "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/config/1.4.2/config-1.4.2.jar"
+                        },
+                        {
+                            "name": "config",
+                            "classifier": "sources",
+                            "path": "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/config/1.4.2/config-1.4.2-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.scala-lang.modules",
+                    "name": "scala-java8-compat_2.12",
+                    "version": "0.8.0",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "scala-java8-compat_2.12",
+                            "path": "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-java8-compat_2.12/0.8.0/scala-java8-compat_2.12-0.8.0.jar"
+                        },
+                        {
+                            "name": "scala-java8-compat_2.12",
+                            "classifier": "sources",
+                            "path": "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-java8-compat_2.12/0.8.0/scala-java8-compat_2.12-0.8.0-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.scala-lang.modules",
+                    "name": "scala-parser-combinators_2.12",
+                    "version": "1.1.2",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "scala-parser-combinators_2.12",
+                            "path": "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-parser-combinators_2.12/1.1.2/scala-parser-combinators_2.12-1.1.2.jar"
+                        },
+                        {
+                            "name": "scala-parser-combinators_2.12",
+                            "classifier": "sources",
+                            "path": "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-parser-combinators_2.12/1.1.2/scala-parser-combinators_2.12-1.1.2-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.scala-lang",
+                    "name": "scala-library",
+                    "version": "2.12.20",
+                    "configurations": "optional",
+                    "artifacts": [
+                        {
+                            "name": "scala-library",
+                            "path": "/home/rugal/.sbt/boot/scala-2.12.20/lib/scala-library.jar"
+                        },
+                        {
+                            "name": "scala-library",
+                            "classifier": "sources",
+                            "path": "/home/rugal/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala-library/2.12.20/scala-library-2.12.20-sources.jar"
+                        }
+                    ]
+                }
+            ]
+        },
+        "tags": [
+            "library"
+        ]
+    }
+}
