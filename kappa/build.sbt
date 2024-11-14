@@ -32,10 +32,13 @@ lazy val producer = (project in file("producer"))
       akkaStream,   // Added Akka Streams dependency for streaming data handling
       // Add producer-specific dependencies here
       akkaActor,
+      "org.java-websocket" % "Java-WebSocket" % "1.5.2",  // WebSocket client
       "io.circe" %% "circe-core" % "0.14.5",
       "io.circe" %% "circe-generic" % "0.14.5",
       "io.circe" %% "circe-parser" % "0.14.5",
-      "io.spray" %% "spray-json" % "1.3.6"
+      "io.spray" %% "spray-json" % "1.3.6",
+      "org.slf4j" % "slf4j-api" % "1.7.32",               // SLF4J logging
+      "org.slf4j" % "slf4j-simple" % "1.7.32"              // Simple SLF4J implementation
     ),
     testFrameworks += new TestFramework("munit.Framework"),
     assembly / assemblyMergeStrategy := {
