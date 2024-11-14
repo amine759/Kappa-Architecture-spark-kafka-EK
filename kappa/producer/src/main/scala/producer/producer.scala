@@ -1,97 +1,114 @@
-import akka.actor.ActorSystem
-import akka.http.scaladsl.Http
-import akka.http.scaladsl.model.ws.{Message, TextMessage, WebSocketRequest, WebSocketUpgradeResponse}
-import akka.http.scaladsl.model.{ContentTypes, HttpEntity, StatusCodes}
-import akka.http.scaladsl.server.Directives._
-import akka.stream.scaladsl.{Flow, Sink, Source}
-import akka.stream.Materializer
-import spray.json._
+package producer
 
-import scala.concurrent.{ExecutionContextExecutor, Future}
-import scala.io.StdIn
+import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext.Implicits.global
+import akka.actor.ActorSystem
+import akka.stream.Materializer
+import akka.stream.scaladsl._
+import akka.http.scaladsl._
+import akka.http.scaladsl.model._
+import akka.http.scaladsl.model.ws._
+import akka.util.Timeout
+import akka.http.scaladsl.Http
+import org.apache.kafka.clients.producer._
+import io.circe._
+import io.circe.parser._
+import io.circe.generic.auto._
+import io.circe.syntax._
+import java.util.Properties
+import org.apache.kafka.common.serialization.StringSerializer
+import scala.concurrent.duration._
 import scala.util.{Failure, Success}
 
-// Define the case class to match the JSON structure
-case class TradeData(e: String, E: Long, s: String, t: Long, p: String, q: String, T: Long, m: Boolean, M: Boolean)
+object Producer extends App {
 
-object Producer extends DefaultJsonProtocol {
+  // Kafka configuration
+  val kafkaProps = new Properties()
+  val config = Config.load() // Assuming Config is a custom class to load settings
 
-  // Define implicit JSON formatter for TradeData
-  implicit val tradeDataFormat = jsonFormat9(TradeData)
+  kafkaProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, config.kafkaBootstrapServers)
+  kafkaProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, classOf[StringSerializer].getName)
+  kafkaProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, classOf[StringSerializer].getName)
 
-  def main(args: Array[String]): Unit = {
+  // Kafka producer instance
+  val producer = new KafkaProducer[String, String](kafkaProps)
 
-    implicit val system: ActorSystem = ActorSystem("my-system")
-    implicit val ec: ExecutionContextExecutor = system.dispatcher
-    implicit val materializer: Materializer = Materializer(system)
-
-    val helloRoute =
-      path("hello") {
-        get {
-          complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, "<h1>Say hello to akka-http</h1>"))
-        }
+  // Method to send messages to Kafka
+  def sendToKafka(topic: String, message: String): Unit = {
+    val record = new ProducerRecord[String, String](topic, null, message)
+    producer.send(record, (metadata, exception) => {
+      if (exception != null) {
+        println(s"Error sending message to Kafka: ${exception.getMessage}")
+      } else {
+        println(s"Message sent to Kafka topic ${metadata.topic()} at offset ${metadata.offset()}")
       }
+    })
+  }
 
-    val bindingFuture = Http().bindAndHandle(helloRoute, "localhost", 8080)
-    println("HTTP server running at http://localhost:8080/")
+  // Method to process WebSocket messages
+  def processWebSocketMessage(message: String): Unit = {
+    // Parse the WebSocket message as JSON
+    decode[Map[String, String]](message) match {
+      case Right(jsonData) =>
+        val topic = jsonData.get("topic").getOrElse("default")
+        val messageContent = jsonData.get("message").getOrElse("No message")
+        // Send the processed message to Kafka
+        sendToKafka(topic, messageContent)
+      case Left(error) =>
+        println(s"Failed to parse message as JSON: $error")
+    }
+  }
 
-    val binanceUri = "wss://stream.binance.com:9443/ws/btcusdt@trade"
+  // Start the WebSocket client
+  def startWebSocketClient()(implicit system: ActorSystem, materializer: Materializer, executionContext: ExecutionContext): Future[Unit] = {
+    // WebSocket URI
+    val uri = config.stream
 
-    val wsFlow: Flow[Message, Message, _] = Flow[Message]
-      .collect {
-        case TextMessage.Strict(text) =>
-          println(s"Received raw message: $text")  // Log the raw JSON for inspection
-          try {
-            // Try parsing as TradeData first
-            val data = text.parseJson.convertTo[TradeData]
-            println(s"Parsed Binance data: Event: ${data.e}, Symbol: ${data.s}, Price: ${data.p}, Quantity: ${data.q}, Time: ${data.E}")
-            TextMessage(text)
-          } catch {
-            case _: DeserializationException =>
-              // Handle messages that cannot be parsed as TradeData
-              val json = text.parseJson
-              if (json.asJsObject.fields.contains("result") && json.asJsObject.fields("result") == JsNull) {
-                println("Received message with result null; skipping...")
-                TextMessage("")  // Skip this message
-              } else if (json.asJsObject.fields.contains("error")) {
-                println(s"Received error message: ${json.asJsObject.fields("error")}; skipping...")
-                TextMessage("")  // Skip this error message
-              } else {
-                println(s"Skipping message due to deserialization error: ${text}")
-                TextMessage("")  // Respond with an empty message if needed
-              }
-          }
-      }
-      .prepend(Source.single(TextMessage(
-        """
-          |{
-          | "method": "SUBSCRIBE",
-          | "params": ["btcusdt@trade"],
-          | "id": 1
-          |}
-        """.stripMargin
-      )))
-
-    val upgradeResponse: Future[WebSocketUpgradeResponse] =
-      Http().singleWebSocketRequest(WebSocketRequest(binanceUri), wsFlow)._1
-
-    upgradeResponse.onComplete {
-      case Success(upgrade) =>
-        if (upgrade.response.status == StatusCodes.SwitchingProtocols) {
-          println("Connected to WebSocket successfully")
-        } else {
-          println(s"Connection failed: ${upgrade.response.status}")
-          system.terminate()
-        }
-
-      case Failure(ex) =>
-        println(s"Connection failed with exception: ${ex.getMessage}")
-        system.terminate()
+    // WebSocket flow: Processing incoming messages
+    val flow: Flow[Message, Message, _] = Flow[Message].map {
+      case TextMessage.Strict(text) =>
+        // Process the WebSocket message
+        processWebSocketMessage(text)
+        TextMessage("Message received")
+      case _ => 
+        TextMessage("Unsupported message type")
     }
 
-    println("Press ENTER to exit")
-    StdIn.readLine()
-    system.terminate()
+    // Establish WebSocket connection
+    val (upgradeResponse, closed) = Http().singleWebSocketRequest(WebSocketRequest(uri), flow)
+
+    // Handle WebSocket connection response
+    upgradeResponse.onComplete {
+      case Success(upgrade) =>
+        println(s"Connected to WebSocket: ${upgrade.response.status}")
+      case Failure(exception) =>
+        println(s"Failed to connect to WebSocket: ${exception.getMessage}")
+    }
+    // Handle WebSocket closure
+    closed.onComplete {
+      case Success(_) => 
+        println("WebSocket connection closed")
+      case Failure(exception) =>
+        println(s"WebSocket connection failed: ${exception.getMessage}")
+    }
+
+    // Ensure that the program keeps running until the connection is closed
+    closed.map(_ => ())
+  
+  }
+  // Main entry point
+  def main(args: Array[String]): Unit = {
+    implicit val system: ActorSystem = ActorSystem("ProducerSystem")
+    implicit val materializer: Materializer = Materializer(system)
+    implicit val executionContext: ExecutionContext = system.dispatcher
+
+    // Start the WebSocket client
+    startWebSocketClient()
+
+    // Keep the application running while waiting for termination
+    system.whenTerminated.onComplete(_ => {
+      producer.close()
+      println("Producer closed")
+    })
   }
 }
-

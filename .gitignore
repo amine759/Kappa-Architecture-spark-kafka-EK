@@ -10,6 +10,7 @@ blabla.sh
 target/
 kappa/target
 kappa/.bsp
+kappa/.bloop/
 # If you have any other target directories in submodules, you might want to include those as well
 
 # IDE specific files (I use neovim btw)

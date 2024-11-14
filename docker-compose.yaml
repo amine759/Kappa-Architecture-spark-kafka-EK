@@ -31,3 +31,6 @@ services:
       retries: 3
     networks:
       - kafka-net
+
+networks:
+  kafka-net:
