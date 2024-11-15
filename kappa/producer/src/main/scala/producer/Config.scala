@@ -8,7 +8,7 @@ case class AppConfig(
 object Config {
   def load(): AppConfig = {
     AppConfig(
-      kafkaBootstrapServers = "broker:9092",
+      kafkaBootstrapServers = "localhost:9092",
       stream = "wss://stream.binance.com:9443/ws/btcusdt@trade" // Adjust as needed
     )
   }

@@ -45,5 +45,5 @@ lazy val producer = (project in file("producer"))
       case PathList("META-INF", xs @ _*) => MergeStrategy.discard
       case x => MergeStrategy.first
     },
-    assembly / mainClass := Some("producer.Producer") // Replace with your actual main class
+    Compile / mainClass := Some("producer.Main") // This should point to your Main object
   )
