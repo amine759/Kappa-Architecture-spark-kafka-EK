@@ -6,80 +6,70 @@ import akka.stream.scaladsl._
 import akka.http.scaladsl._
 import akka.http.scaladsl.model._
 import akka.http.scaladsl.model.ws._
-import akka.util.Timeout
+import akka.Done
+import akka.NotUsed
 import scala.concurrent.{ExecutionContext, Future}
-import scala.concurrent.duration._
 import scala.util.{Failure, Success}
-import akka.actor.ActorSystem
 import java.util.concurrent.Executors
+import org.apache.kafka.clients.producer._
 
 class WebsocketClient()(implicit system: ActorSystem, materializer: Materializer) {
-
-  // Custom execution context
   val customThreadPool = Executors.newFixedThreadPool(4)
   implicit val customExecutionContext: ExecutionContext = ExecutionContext.fromExecutor(customThreadPool)
 
-  // Method to start the WebSocket client
   def startWebSocketClient(uri: String)(implicit system: ActorSystem, materializer: Materializer): Future[Unit] = {
     val webSocketFlow = Http().webSocketClientFlow(WebSocketRequest(uri))
-
-    // Define the source that continuously emits incoming messages to process
-    val messageSource: Source[Message, _] = Source.actorRef[TextMessage.Strict](
-      completionMatcher = PartialFunction.empty,
-      failureMatcher = PartialFunction.empty,
-      bufferSize = 10,
-      overflowStrategy = OverflowStrategy.fail
+    
+    val subscribeMessage = TextMessage(
+      """{
+        | "method": "SUBSCRIBE",
+        | "params": ["btcusdt@ticker"],
+        | "id": 1
+        |}""".stripMargin
     )
-
-    // Define the sink to process incoming WebSocket messages
-    val messageSink: Sink[Message, _] = Sink.foreach[Message] {
-      case TextMessage.Strict(text) =>
-        println(s"Received message: $text")
-        Producer.processWebSocketMessage(text)  // Call producer's method for handling messages
-      case _ =>
-        println("Received an unsupported message type")
+    
+    val pingMessage = TextMessage("""{"ping": 1}""")
+    val messageSink: Sink[Message, Future[Done]] = Sink.foreach[Message] {
+      case message: TextMessage =>
+        message.textStream.runFold("")(_ + _).map { text =>
+          println(s"Received message: $text")
+          Producer.processWebSocketMessage(text)
+        }
+      case other => 
+        println(s"Received unexpected message type: $other")
     }
 
-    // Create the WebSocket flow
-    val ((_, closed), upgradeResponse : Future[WebSocketUpgradeResponse]) = messageSource
-      .viaMat(webSocketFlow)(Keep.both)
-      .toMat(messageSink)(Keep.both)
-      .run()
+    // Create source of messages
+    val messageSource = Source.single(subscribeMessage)
+      .concat(Source.maybe[Message])
 
-    // Handle the WebSocketUpgradeResponse Future
-    upgradeResponse.flatMap { upgrade =>
-      println(s"WebSocket connection established with status: ${upgrade.response.status}")
-      
-      // Send subscription message after the WebSocket connection is established
-      val subscribeMessage = TextMessage(
-        """{
-          | "method": "SUBSCRIBE",
-          | "params": ["btcusdt@ticker"],
-          | "id": 1
-          |}""".stripMargin
-      )
-      
-      println("Sending subscription message...")
-      // Send subscription message to the WebSocket flow
-      val newSource: Source[Message, _] = Source.single(subscribeMessage)
-      //newSource.viaMat(webSocketFlow)(Keep.both).toMat(messageSink)(Keep.both).run()
-     // WebSocket flow
-      val webSocketFlow: Flow[Message, Message, Future[WebSocketUpgradeResponse]] = Http().webSocketClientFlow(WebSocketRequest(uri))
-      Future.successful(())
-    }.recover {
-      case exception: Throwable =>
-        println(s"Failed to upgrade WebSocket connection: ${exception.getMessage}")
-    }
+    // Run the flow with proper types
+    val (upgradeResponse: Future[WebSocketUpgradeResponse], completion: Future[Done]) = 
+      messageSource
+        .viaMat(webSocketFlow)(Keep.right)
+        .toMat(messageSink)(Keep.both)
+        .run()
 
-    // Handle the WebSocket closure
-    closed.onComplete {
-      case Success(_) =>
-        println("WebSocket connection closed")
-        system.terminate() // Terminate ActorSystem when WebSocket is closed
-      case Failure(exception) =>
-        println(s"WebSocket connection failed: ${exception.getMessage}")
+    // Handle connection
+    upgradeResponse.onComplete {
+      case Success(upgrade) =>
+        println(s"WebSocket connection established with status: ${upgrade.response.status}")
+      case Failure(ex) =>
+        println(s"WebSocket connection failed: ${ex.getMessage}")
+        system.terminate()
     }(customExecutionContext)
 
-    closed.map(_ => ())(customExecutionContext)
+    // Handle completion
+    completion.onComplete {
+      case Success(_) =>
+        println("WebSocket connection closed normally")
+        system.terminate()
+      case Failure(ex) =>
+        println(s"WebSocket connection closed with error: ${ex.getMessage}")
+        system.terminate()
+    }(customExecutionContext)
+
+    // Return a future that completes when everything is done
+    completion.map(_ => ())(customExecutionContext)
   }
 }

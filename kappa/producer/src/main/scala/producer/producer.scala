@@ -34,7 +34,7 @@ object Producer {
 
   // Kafka producer instance
   val producer = new KafkaProducer[String, String](kafkaProps)
-
+  
   // Method to send messages to Kafka
   def sendToKafka(topic: String, message: String): Unit = {
     val record = new ProducerRecord[String, String](topic, null, message)
@@ -46,7 +46,6 @@ object Producer {
       }
     })
   }
-
   // Method to process WebSocket messages
   def processWebSocketMessage(message: String): Unit = {
     decode[WebSocketMessage](message) match {
@@ -59,11 +58,11 @@ object Producer {
         println(s"Failed to parse message as JSON: $error")
     }
   }
-
   def close(): Unit = {
-    producer.close()
-    println("Kafka producer closed")
-  }
+      producer.close()
+      println("Kafka producer closed")
+    }
+
 }
 
 

@@ -38,7 +38,7 @@ lazy val producer = (project in file("producer"))
       "io.circe" %% "circe-parser" % "0.14.5",
       "io.spray" %% "spray-json" % "1.3.6",
       "org.slf4j" % "slf4j-api" % "1.7.32",               // SLF4J logging
-      "org.slf4j" % "slf4j-simple" % "1.7.32"              // Simple SLF4J implementation
+      "org.slf4j" % "slf4j-simple" % "1.7.32",              // Simple SLF4J implementation
     ),
     testFrameworks += new TestFramework("munit.Framework"),
     assembly / assemblyMergeStrategy := {
