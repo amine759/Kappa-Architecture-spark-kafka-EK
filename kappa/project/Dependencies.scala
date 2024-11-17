@@ -24,13 +24,18 @@ object Dependencies {
   // Configuration
   val commonConfig = "com.typesafe" % "config" % "1.4.1"
 
-  // Akka HTTP for WebSocket
-  val AkkaVersion = "2.7.0"
-  val AkkaHttpVersion = "10.5.0"
-  // Akka HTTP for WebSocket
-  val akkaHttp = "com.typesafe.akka" %% "akka-http" % AkkaHttpVersion 
-  // Akka Streams for handling streaming data
-  val akkaStream = "com.typesafe.akka" %% "akka-stream" % AkkaVersion
-  val akkaActor = "com.typesafe.akka" %% "akka-actor" % AkkaVersion
+  val akkaHttp = "com.typesafe.akka" %% "akka-http" % "10.2.10"
+  val akkaStream = "com.typesafe.akka" %% "akka-stream" % "2.9.0-M1"
+  val akkaActor = "com.typesafe.akka" %% "akka-actor" % "2.9.0-M1"
+  val akkaStreamKafka = "com.typesafe.akka" %% "akka-stream-kafka" % "3.0.1"
+  val kafkaClients = "org.apache.kafka" % "kafka-clients" % "3.5.1"
+  val logbackClassic = "ch.qos.logback" % "logback-classic" % "1.2.11"
+  val circeCore = "io.circe" %% "circe-core" % "0.14.5"
+  val circeGeneric = "io.circe" %% "circe-generic" % "0.14.5"
+  val circeParser = "io.circe" %% "circe-parser" % "0.14.5"
+  val slf4jApi = "org.slf4j" % "slf4j-api" % "1.7.32"
+  val slf4jSimple = "org.slf4j" % "slf4j-simple" % "1.7.32"
+  val akkaSpra = "your.organization" %% "your-akka-spra-lib" % "version" // Replace with actual details
+  val munit = "org.scalameta" %% "munit" % "0.7.29" % Test
    // Akka HTTP for WebSocket
 }

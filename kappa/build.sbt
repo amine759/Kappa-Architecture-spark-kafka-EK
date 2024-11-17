@@ -13,37 +13,34 @@ lazy val root = (project in file("."))
       commonConfig// Common dependency across microservices
       // Add other common dependencies here if needed
     ),
-    resolvers += "Maven Central" at "https://repo1.maven.org/maven2/"
+    resolvers ++= Seq(
+      Resolver.mavenCentral,
+      "Akka Maven Repository" at "https://repo.akka.io/releases/"
+    ),
   )
 
 
 lazy val producer = (project in file("producer"))
   .settings(
-    name := "producer-service",
+    name := "kappa",
+    version := "0.1.0",
+    scalaVersion := "2.13.14",
     libraryDependencies ++= Seq(
+      akkaHttp,
+      akkaStream,
+      akkaActor,
+      akkaStreamKafka,
       kafkaClients,
       logbackClassic,
-      scalaCollectionCompat,
       circeCore,
       circeGeneric,
       circeParser,
-      munit,
-      akkaHttp,    // Added Akka HTTP dependency for WebSocket communication
-      akkaStream,   // Added Akka Streams dependency for streaming data handling
-      // Add producer-specific dependencies here
-      akkaActor,
-      "org.java-websocket" % "Java-WebSocket" % "1.5.2",  // WebSocket client
-      "io.circe" %% "circe-core" % "0.14.5",
-      "io.circe" %% "circe-generic" % "0.14.5",
-      "io.circe" %% "circe-parser" % "0.14.5",
-      "io.spray" %% "spray-json" % "1.3.6",
-      "org.slf4j" % "slf4j-api" % "1.7.32",               // SLF4J logging
-      "org.slf4j" % "slf4j-simple" % "1.7.32",              // Simple SLF4J implementation
+      slf4jApi,
+      slf4jSimple,
+      akkaSpra,
+      munit
     ),
     testFrameworks += new TestFramework("munit.Framework"),
-    assembly / assemblyMergeStrategy := {
-      case PathList("META-INF", xs @ _*) => MergeStrategy.discard
-      case x => MergeStrategy.first
-    },
-    Compile / mainClass := Some("producer.Main") // This should point to your Main object
+    Compile / mainClass := Some("producer.WebSocketToKafkaProducer") // This should point to your Main object
   )
+
