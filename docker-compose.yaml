@@ -32,5 +32,31 @@ services:
     networks:
       - kafka-net
 
+  # Spark Master service
+  spark-master:
+    image: bitnami/spark:3.5.0
+    container_name: spark-master
+    environment:
+      - SPARK_MODE=master
+    ports:
+      - "7077:7077"
+      - "8080:8080"
+    networks:
+      - kafka-net
+
+  # Spark Worker service
+  spark-worker:
+    image: bitnami/spark:3.5.0
+    container_name: spark-worker
+    environment:
+      - SPARK_MODE=worker
+      - SPARK_MASTER_URL=spark://spark-master:7077
+    depends_on:
+      - spark-master
+    ports:
+      - "8081:8081" # Spark Worker UI port (optional for monitoring)
+    networks:
+      - kafka-net
+
 networks:
   kafka-net:
