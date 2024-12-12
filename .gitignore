@@ -1,0 +1,33 @@
+blabla.sh
+# SBT files
+*.class
+*.log
+*.war
+*.jar
+*.ear
+*.metals
+# Target directories
+target/
+kappa/target
+kappa/.bsp
+kappa/.bloop/
+# If you have any other target directories in submodules, you might want to include those as well
+
+# IDE specific files (I use neovim btw)
+.idea/
+*.iml
+*.ipr
+*.iws
+*.hprof
+
+# Archive files
+archive/
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Other configuration files
+*.swp
+*.swo
+*.bak

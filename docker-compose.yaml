@@ -1,0 +1,109 @@
+
+networks:
+  kafka-net:
+    driver: bridge
+volumes:
+  es_data :
+services:
+  zookeeper:
+    image: confluentinc/cp-zookeeper:latest
+    hostname: zookeeper
+    container_name: zookeeper
+    ports:
+      - "2181:2181"
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+      ALLOW_ANONYMOUS_LOGIN: "yes"
+    healthcheck:
+      test: ['CMD', 'bash', '-c', "echo 'ruok' | nc localhost 2181"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - kafka-net
+
+  kafka:
+    image: confluentinc/cp-kafka:latest
+    container_name: kafka
+    ports:
+      - "9092:9092"
+    depends_on:
+      zookeeper:
+        condition: service_healthy
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_INTERNAL:PLAINTEXT
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092,PLAINTEXT_INTERNAL://0.0.0.0:29092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092,PLAINTEXT_INTERNAL://kafka:29092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      ALLOW_PLAINTEXT_LISTENER: "yes"
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+    healthcheck:
+      test: ["CMD-SHELL", "kafka-broker-api-versions --bootstrap-server kafka:9092 || exit 1"]
+      interval: 10s
+      timeout: 10s
+      retries: 3
+    networks:
+      - kafka-net
+
+  spark-master:
+    image: bitnami/spark:3.5.0
+    container_name: spark-master
+    environment:
+      - KAFKA_BROKER_URL=kafka:9092  # Pointing to Kafka broker
+      - SPARK_MODE=master
+      - SPARK_SUBMIT_OPTIONS=--packages org.elasticsearch:elasticsearch-spark-30_2.12:7.17.13
+    volumes:
+      - ./elasticsearch-spark-30_2.12-7.17.13.jar:/opt/bitnami/spark/jars/elasticsearch-spark-30_2.12-7.17.13.jar
+
+    ports:
+      - "7077:7077" # Spark master port
+      - "8080:8080" # Spark master web UI port
+    networks:
+      - kafka-net
+
+  spark-worker:
+    image: bitnami/spark:3.5.0
+    container_name: spark-worker
+    environment:
+      - SPARK_MODE=worker
+      - KAFKA_BROKER_URL=kafka:9092  # Pointing to Kafka broker
+      - SPARK_MASTER_URL=spark://spark-master:7077
+    volumes:
+      - ./elasticsearch-spark-30_2.12-7.17.13.jar:/opt/bitnami/spark/jars/elasticsearch-spark-30_2.12-7.17.13.jar
+    depends_on:
+      - spark-master
+    ports:
+      - "8081:8081" # Spark worker web UI port
+    networks:
+      - kafka-net
+  elasticsearch:
+    image: elasticsearch:7.17.13
+    container_name: elasticsearch
+    environment:
+      - discovery.type=single-node
+      - ES_JAVA_OPTS=-Xms512m -Xmx512m
+      - xpack.security.enabled=false  # Disable security for local dev
+    volumes:
+      - es_data:/usr/share/elasticsearch/data
+    ports:
+      - "9200:9200" # Elasticsearch REST API
+      - "9300:9300" # Elasticsearch transport protocol
+    networks:
+      - kafka-net
+
+  kibana:
+    image: kibana:7.17.13
+    container_name: kibana
+    depends_on:
+      - elasticsearch
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+    ports:
+      - "5601:5601" # Kibana web UI
+    networks:
+      - kafka-net
+
