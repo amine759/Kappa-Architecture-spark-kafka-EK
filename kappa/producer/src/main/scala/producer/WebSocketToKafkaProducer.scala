@@ -21,7 +21,7 @@ object WebSocketToKafkaProducer {
     // Create the Actor System and Materializer
     implicit val system: ActorSystem = ActorSystem("WebSocketKafkaProducer")
     implicit val materializer: Materializer = ActorMaterializer()
-    config = Config.load()
+    val config = Config.load()
 
     // Kafka Producer Settings
     val producerSettings = ProducerSettings(system, new StringSerializer, new StringSerializer)
@@ -84,6 +84,6 @@ object WebSocketToKafkaProducer {
     }
 
     // Wait for the actor system to terminate
-    Await.result(system.whenTerminated, 30.seconds)
+    Await.result(system.whenTerminated, 1000.seconds)
   }
 }
