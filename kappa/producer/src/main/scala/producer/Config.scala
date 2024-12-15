@@ -1,15 +1,31 @@
-package producer
+package consumer
 
 case class AppConfig(
     kafkaBootstrapServers: String,
-    stream: String,
+    kafkaGroupId: String,
+    kafkaTopic: String,
+    elasticsearchHost: String,
+    elasticsearchPort: Int,
+    elasticsearchScheme: String,
+    elasticsearchUser: String,
+    elasticsearchPassword: String,
+    elasticsearchIndex: String,
+    esJavaOpts: String
 )
 
 object Config {
   def load(): AppConfig = {
     AppConfig(
-      kafkaBootstrapServers = "localhost:9092",
-      stream = "wss://stream.binance.com:9443/ws/btcusdt@trade" // Adjust as needed
+      kafkaBootstrapServers = "broker:9092",
+      kafkaGroupId = "csv-consumer-group",
+      kafkaTopic = "kafka-spark-topic",
+      elasticsearchHost = "localhost",
+      elasticsearchPort = 9200,
+      elasticsearchScheme = "https",
+      elasticsearchUser = "elastic",
+      elasticsearchPassword = "rasta",
+      elasticsearchIndex = "kafka-spark-index",
+      esJavaOpts = "-Xms512m -Xmx512m"
     )
   }
 }
