@@ -79,5 +79,5 @@ lazy val sparkStreamingApp = (project in file("spark-streaming-app"))
       ShadeRule.rename("org.apache.kafka.**" -> "shaded.org.apache.kafka.@1").inAll
     ),
     assembly / assemblyJarName := s"${name.value}-assembly-${version.value}.jar",
-    assembly / mainClass := Some("sparkstreaming.Main")
+    assembly / mainClass := Some("sparkstreaming.SparkKafkaConsumer")
   )
