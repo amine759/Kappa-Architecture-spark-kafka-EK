@@ -1,4 +1,4 @@
-package consumer
+package producerkafkaBootstrapServers
 
 case class AppConfig(
     kafkaBootstrapServers: String,
