@@ -1,8 +1,12 @@
 networks:
   kafka-net:
     driver: bridge
+
 volumes:
-  es_data :
+  es_data:
+    driver: local
+  kibana_data:
+    driver: local
 
 services:
   zookeeper:
@@ -53,12 +57,11 @@ services:
     image: bitnami/spark:3.5.0
     container_name: spark-master
     environment:
-      - KAFKA_BROKER_URL=kafka:9092  # Pointing to Kafka broker
+      - KAFKA_BROKER_URL=kafka:9092  # Pointing to Kafka broker
       - SPARK_MODE=master
       - SPARK_SUBMIT_OPTIONS=--packages org.elasticsearch:elasticsearch-spark-30_2.12:7.17.13
     volumes:
       - ./elasticsearch-spark-30_2.12-7.17.13.jar:/opt/bitnami/spark/jars/elasticsearch-spark-30_2.12-7.17.13.jar
-
     ports:
       - "7077:7077" # Spark master port
       - "8080:8080" # Spark master web UI port
@@ -70,7 +73,7 @@ services:
     container_name: spark-worker
     environment:
       - SPARK_MODE=worker
-      - KAFKA_BROKER_URL=kafka:9092  # Pointing to Kafka broker
+      - KAFKA_BROKER_URL=kafka:9092  # Pointing to Kafka broker
       - SPARK_MASTER_URL=spark://spark-master:7077
     volumes:
       - ./elasticsearch-spark-30_2.12-7.17.13.jar:/opt/bitnami/spark/jars/elasticsearch-spark-30_2.12-7.17.13.jar
@@ -103,6 +106,8 @@ services:
       - elasticsearch
     environment:
       - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+    volumes:
+      - kibana_data:/usr/share/kibana/data
     ports:
       - "5601:5601" # Kibana web UI
     networks:
