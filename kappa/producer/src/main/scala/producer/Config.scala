@@ -1,4 +1,4 @@
-package producerkafkaBootstrapServers
+package producer
 
 case class AppConfig(
     kafkaBootstrapServers: String,
