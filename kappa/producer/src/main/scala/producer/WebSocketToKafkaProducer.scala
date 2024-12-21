@@ -25,7 +25,7 @@ object WebSocketToKafkaProducer {
 
     // Kafka Producer Settings
     val producerSettings = ProducerSettings(system, new StringSerializer, new StringSerializer)
-      .withBootstrapServers("localhost:9092")
+      .withBootstrapServers(config.kafkaBootstrapServers)
     
     val kafkaSink = Producer.plainSink(producerSettings)
     
@@ -49,7 +49,7 @@ object WebSocketToKafkaProducer {
         }
         .async // Introduce an asynchronous boundary
         .runForeach { line =>
-          val record = new ProducerRecord[String, String]("main-topic", line)
+          val record = new ProducerRecord[String, String](config.topic, line)
           Source.single(record).runWith(kafkaSink)
         }
     }
