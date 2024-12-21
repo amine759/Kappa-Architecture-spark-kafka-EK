@@ -46,12 +46,6 @@ jobs:
       with:
         sbt-version: '1.10.4'  # Ensure this matches your build.properties
 
-    # Step 4: Build assembly JAR for Scala-based microservices
-    - name: Build assembly JAR for ${{ matrix.service }}
-      run: |
-        cd kappa
-        sbt clean ${{ matrix.service }}/assembly
-
     # Step 5: Log in to Docker Hub
     - name: Log in to Docker Hub
       uses: docker/login-action@v2
