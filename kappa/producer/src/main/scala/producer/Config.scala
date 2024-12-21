@@ -1,4 +1,8 @@
+<<<<<<< Updated upstream
 package producerkafkaBootstrapServers
+=======
+package producer
+>>>>>>> Stashed changes
 
 case class AppConfig(
     kafkaBootstrapServers: String,
