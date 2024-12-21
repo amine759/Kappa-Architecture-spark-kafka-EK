@@ -2,15 +2,12 @@ package sparkstreaming
 
 import org.apache.spark.sql.expressions.Window
 import org.apache.spark.sql.{DataFrame, SparkSession}
-import org.apache.spark.sql.streaming.StreamingQuery
-import org.apache.spark.sql.streaming.Trigger
-import org.apache.spark.sql.SparkSession
+import org.apache.spark.sql.streaming.{StreamingQuery, OutputMode, Trigger}
 import org.apache.spark.sql.functions._
 import org.apache.spark.sql.types._
 import org.apache.spark.sql.streaming.OutputMode
 
-
-object SparkKafkaConsumer{
+object SparkKafkaConsumer {
   def main(args: Array[String]): Unit = {
     val spark = SparkSession.builder()
       .appName("BinanceTradeConsumer")
@@ -21,7 +18,6 @@ object SparkKafkaConsumer{
       .config("spark.sql.caseSensitive", true) // .config("spark.es.nodes.wan.only", "true")  Enable WAN mode (optional)
       .config("spark.sql.shuffle.partitions", "200")
       .config("spark.dynamicAllocation.enabled", "true")
-
       .config("spark.es.nodes.wan.only", "true")
       .config("spark.es.mapping.date.rich", "false")
       .config("spark.es.index.read.missing.as.empty", "true")
@@ -79,7 +75,6 @@ object SparkKafkaConsumer{
       .withColumn("trade_time", from_unixtime($"trade_time" / 1000).cast("timestamp")) // Convert to DateType
       .withColumn("trade_time", date_format($"trade_time", "yyyy-MM-dd HH:mm:ss").cast("string")) // Convert timestamp to formatted date
 
-
     // Add Trade Direction (Buy/Sell)
     val enrichedDF = castedDF
       .withColumn("trade_direction", when(col("market_status") === true, "Sell").otherwise("Buy"))
@@ -88,21 +83,28 @@ object SparkKafkaConsumer{
     val valueDF = enrichedDF
       .withColumn("trade_value", col("price") * col("quantity"))
 
-// Alternative Elasticsearch writing approach
-val query: StreamingQuery  = valueDF
-  .writeStream
-  .outputMode("append")
-  .foreachBatch { (batchDF: DataFrame, batchId: Long) =>
-    batchDF.write
-      .format("org.elasticsearch.spark.sql")
-      .option("es.resource", "trades-index")
-      .option("es.nodes", "elasticsearch")
-      .option("es.port", "9200")
-      .mode("append")
-      .save()
-  }
-  .option("checkpointLocation", "/opt/spark/checkpoint/trades")
-  .start()
+    // Detect Anomalies Based on a Threshold (e.g., price > 100,000)
+    val withAnomalies = valueDF
+      .withColumn("is_anomaly", when(col("price") > 100000, true).otherwise(false))
+
+   
+    // Write aggregated data to Elasticsearch
+    val query: StreamingQuery =  withAnomalies
+      .writeStream
+      .outputMode("append")  // Append mode works with aggregation
+      .foreachBatch { (batchDF: DataFrame, batchId: Long) =>
+        batchDF.write
+          .format("org.elasticsearch.spark.sql")
+          .option("es.resource", "trades-index")
+          .option("es.nodes", "elasticsearch")
+          .option("es.port", "9200")
+          .mode("append")
+          .option("es.id", "trade_timestamp") // Optional: set a unique document ID
+          .save()
+      }
+      .option("checkpointLocation", "/opt/spark/checkpoint/aggregated-trades")  // Specify checkpoint location
+      .start()
+
     // Await termination
     query.awaitTermination()
   }
