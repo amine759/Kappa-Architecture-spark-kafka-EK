@@ -18,7 +18,11 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-
+    
+    strategy:
+      matrix:
+        service: [websocketproducerservice] # Microservices
+    
     steps:
     - uses: actions/checkout@v4
     - name: Set up JDK 11
@@ -33,3 +37,15 @@ jobs:
       uses: olafurpg/setup-scala@v10
       with:
         sbt-version: '1.10.4'  # Ensure this matches your build.properties
+  # Log in to Docker Hub
+    - name: Log in to Docker Hub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKER_USER }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+
+    # Build and push Docker image for each microservice
+    - name: Build and push ${{ matrix.service }} image
+      run: |
+        docker build -t ${{ secrets.DOCKER_USER }}/${{ matrix.service }}:latest -f ./kappa/${{ matrix.service }}/Dockerfile .
+        docker push ${{ secrets.DOCKER_USER }}/${{ matrix.service }}:latest
