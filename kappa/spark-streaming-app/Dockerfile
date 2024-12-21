@@ -29,14 +29,16 @@ RUN addgroup --system appgroup && adduser --system --ingroup appgroup appuser
 WORKDIR /app
 
 # Copy the assembly JAR from the builder stage
-COPY --from=builder /app/sparkStreamingApp/target/scala-2.12/spark-streaming-assembly-0.1.jar /opt/bitnami/spark/work/kafka-spark-streaming/target/scala-2.12/spark-streaming-assembly-0.1.jar
+COPY --from=builder /app/sparkStreamingApp/target/scala-2.12/spark-streaming-assembly-0.1.jar app.jar
 
-# Ensure proper ownership
-RUN chown -R appuser:appgroup /opt/bitnami/spark/work
+# Change ownership to the non-root user
+RUN chown appuser:appgroup app.jar
 
-# Define the entrypoint to submit the Spark job
-ENTRYPOINT ["/opt/bitnami/spark/bin/spark-submit", \
-    "--packages", "org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.0,org.elasticsearch:elasticsearch-spark-30_2.12:7.17.13", \
-    "--master", "spark://spark-master:7077", \
-    "--class", "sparkstreaming.SparkKafkaConsumer", \
-    "/opt/bitnami/spark/work/kafka-spark-streaming/target/scala-2.12/spark-streaming-assembly-0.1.jar"]
+# Switch to the non-root user
+USER appuser
+
+# Expose the application port
+EXPOSE 8081
+
+# Define the entrypoint to run the service
+ENTRYPOINT ["java", "-jar", "app.jar"]

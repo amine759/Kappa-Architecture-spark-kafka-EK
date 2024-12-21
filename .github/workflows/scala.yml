@@ -22,7 +22,7 @@ permissions:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-    
+
     strategy:
       matrix:
         service: [producer, spark-streaming-app] # Microservices
@@ -48,10 +48,9 @@ jobs:
 
     # Step 4: Build assembly JAR for Scala-based microservices
     - name: Build assembly JAR for ${{ matrix.service }}
-      if: matrix.service == 'spark-streaming-app'
       run: |
-        cd kappa/${{ matrix.service }}
-        sbt clean assembly
+        cd kappa
+        sbt clean ${{ matrix.service }}/assembly
 
     # Step 5: Log in to Docker Hub
     - name: Log in to Docker Hub
