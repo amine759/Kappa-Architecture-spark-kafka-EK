@@ -27,7 +27,7 @@ RUN addgroup --system appgroup && adduser --system --ingroup appgroup appuser
 WORKDIR /app
 
 # Copy the assembly JAR from the builder stage
-COPY --from=builder /app/producer/target/scala-2.13/websocket-producer_2.13-0.1.0-SNAPSHOT.jar app.jar
+COPY --from=builder /app/producer/target/scala-2.13/websocket-producer-assembly-0.1.0-SNAPSHOT.jar app.jar
 
 # Change ownership to the non-root user
 RUN chown appuser:appgroup app.jar

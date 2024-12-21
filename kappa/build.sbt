@@ -36,7 +36,12 @@ lazy val producer = (project in file("producer"))
       munit
     ),
     testFrameworks += new TestFramework("munit.Framework"),
-    Compile / mainClass := Some("producer.WebSocketToKafkaProducer")
+    // sbt-assembly settings
+    assembly / assemblyMergeStrategy := {
+      case PathList("META-INF", xs @ _*) => MergeStrategy.discard
+      case x => MergeStrategy.first
+    },
+    assembly / mainClass := Some("producer.WebSocketToKafkaProducer")
   )
 
 lazy val consumer = (project in file("consumer"))
@@ -53,7 +58,12 @@ lazy val consumer = (project in file("consumer"))
       munit
     ),
     testFrameworks += new TestFramework("munit.Framework"),
-    Compile / mainClass := Some("consumer.Consumer")
+    // sbt-assembly settings
+    assembly / assemblyMergeStrategy := {
+      case PathList("META-INF", xs @ _*) => MergeStrategy.discard
+      case x => MergeStrategy.first
+    },
+    assembly / mainClass := Some("consumer.Consumer")
   )
 
 lazy val sparkStreamingApp = (project in file("spark-streaming-app"))
