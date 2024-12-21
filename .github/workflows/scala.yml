@@ -21,7 +21,7 @@ jobs:
     
     strategy:
       matrix:
-        service: [websocketproducerservice] # Microservices
+        service: [producer] # Microservices
     
     steps:
     - uses: actions/checkout@v4
@@ -47,5 +47,5 @@ jobs:
     # Build and push Docker image for each microservice
     - name: Build and push ${{ matrix.service }} image
       run: |
-        docker build -t ${{ secrets.DOCKER_USER }}/${{ matrix.service }}:latest -f ./kappa/${{ matrix.service }}/Dockerfile .
-        docker push ${{ secrets.DOCKER_USER }}/${{ matrix.service }}:latest
+        docker build -t ${{ secrets.DOCKER_USER }}/websocket-${{ matrix.service }}:latest -f ./kappa/${{ matrix.service }}/Dockerfile .
+        docker push ${{ secrets.DOCKER_USER }}/websocket-${{ matrix.service }}:latest
