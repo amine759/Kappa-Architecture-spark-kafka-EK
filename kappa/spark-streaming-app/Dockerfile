@@ -7,7 +7,7 @@ WORKDIR /app
 COPY kappa/build.sbt /app/
 COPY kappa/project /app/project/
 # Copy the sparkStreamingApp module
-COPY kappa/sparkStreamingApp /app/sparkStreamingApp
+COPY kappa/spark-streaming-app /app/sparkStreamingApp
 
 # Navigate to the sparkStreamingApp project and build the assembly JAR
 RUN sbt "project sparkStreamingApp" clean assembly
