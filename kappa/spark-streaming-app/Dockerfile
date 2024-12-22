@@ -12,9 +12,6 @@ COPY kappa/spark-streaming-app /app/sparkStreamingApp
 # Navigate to the sparkStreamingApp project and build the assembly JAR
 RUN sbt "project sparkStreamingApp" clean assembly
 
-# Validate that the JAR exists
-RUN test -f /app/sparkStreamingApp/target/scala-2.12/spark-streaming-assembly-0.1.jar
-
 # Stage 2: Create the runtime image
 FROM openjdk:11-jre-slim
 
@@ -36,9 +33,3 @@ RUN chown appuser:appgroup app.jar
 
 # Switch to the non-root user
 USER appuser
-
-# Expose the application port
-EXPOSE 8081
-
-# Define the entrypoint to run the service
-ENTRYPOINT ["java", "-jar", "app.jar"]
