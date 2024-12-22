@@ -25,7 +25,6 @@ RUN addgroup --system appgroup && adduser --system --ingroup appgroup appuser
 # Set the working directory
 WORKDIR /app
 
-RUN ls -l /app/spark-streaming-app/target/scala-2.12/
 # Copy the assembly JAR from the builder stage
 COPY --from=builder /app/spark-streaming-app/target/scala-2.12/spark-streaming-assembly-0.1.jar app.jar
 
