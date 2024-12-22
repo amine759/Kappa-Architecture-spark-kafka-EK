@@ -26,7 +26,7 @@ RUN addgroup --system appgroup && adduser --system --ingroup appgroup appuser
 WORKDIR /app
 
 # Copy the assembly JAR from the builder stage
-COPY --from=builder /app/sparkStreamingApp/target/scala-2.12/spark-streaming-assembly-0.1.jar app.jar
+COPY --from=builder /app/sparkStreamingApp/target/scala-2.12/websocket-spark-streaming-assembly-0.1.jar app.jar
 
 # Change ownership to the non-root user
 RUN chown appuser:appgroup app.jar
