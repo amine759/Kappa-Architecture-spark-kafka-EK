@@ -7,7 +7,7 @@ WORKDIR /app
 COPY kappa/build.sbt /app/
 COPY kappa/project /app/project/
 # Copy the sparkStreamingApp module
-COPY kappa/spark-streaming-app /app/sparkStreamingApp
+COPY kappa/spark-streaming-app /app/spark-streaming-app
 
 # Navigate to the sparkStreamingApp project and build the assembly JAR
 RUN sbt "project sparkStreamingApp" clean assembly
@@ -25,8 +25,9 @@ RUN addgroup --system appgroup && adduser --system --ingroup appgroup appuser
 # Set the working directory
 WORKDIR /app
 
+RUN ls -l /app/spark-streaming-app/target/scala-2.12/
 # Copy the assembly JAR from the builder stage
-COPY --from=builder /app/sparkStreamingApp/target/scala-2.12/websocket-spark-streaming-assembly-0.1.jar app.jar
+COPY --from=builder /app/spark-streaming-app/target/scala-2.12/spark-streaming-assembly-0.1.jar app.jar
 
 # Change ownership to the non-root user
 RUN chown appuser:appgroup app.jar
