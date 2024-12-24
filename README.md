@@ -37,9 +37,10 @@ docker ps
 
 ## Running the Producer
 
-### 1. Navigate to the Producer Directory
+### 1. Navigate to the Producer Directory, and install project dependencies using sbt
 ```bash
 cd kappa
+sbt update
 ```
 
 ### 2. Start the Producer
