@@ -112,7 +112,7 @@ Open your web browser and navigate to:
 ```
 http://localhost:5601
 ```
-
+You will find the `export.ndjson` import it in your kibana UI and you will Visualize Real-time updates of the transformed binance stream
 ---
 
 ## Troubleshooting
@@ -128,7 +128,6 @@ http://localhost:5601
 - `docker-compose.yml`: Configuration for Docker services.
 - `kappa`: Producer implementation.
 - `spark-streaming-app`: Spark jobs for processing Kafka data.
-
 ---
 
 ## Contributing
