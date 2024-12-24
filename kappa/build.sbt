@@ -3,7 +3,7 @@ import Dependencies._
 import sbtassembly.AssemblyPlugin.autoImport._
 
 lazy val root = (project in file("."))
-  .aggregate(producer, consumer, sparkStreamingApp)
+  .aggregate(producer,sparkStreamingApp)
   .settings(
     name := "kappa",
     version := "0.1.0",
@@ -42,28 +42,6 @@ lazy val producer = (project in file("producer"))
       case x => MergeStrategy.first
     },
     assembly / mainClass := Some("producer.WebSocketToKafkaProducer")
-  )
-
-lazy val consumer = (project in file("consumer"))
-  .settings(
-    name := "consumer-es",
-    libraryDependencies ++= Seq(
-      kafkaClients,
-      logbackClassic,
-      scalaCollectionCompat,
-      circeCore,
-      circeGeneric,
-      circeParser,
-      elasticsearchRestClient,
-      munit
-    ),
-    testFrameworks += new TestFramework("munit.Framework"),
-    // sbt-assembly settings
-    assembly / assemblyMergeStrategy := {
-      case PathList("META-INF", xs @ _*) => MergeStrategy.discard
-      case x => MergeStrategy.first
-    },
-    assembly / mainClass := Some("consumer.Consumer")
   )
 
 lazy val sparkStreamingApp = (project in file("spark-streaming-app"))

@@ -60,28 +60,33 @@ docker compose exec kafka \
 ---
 
 ## Building and Submitting the Spark Job
+### 1. Deploy spark app in spark master
+```bash
+chmod +x deploy_spark_job.sh
+./deploy_spark_app.sh
+```
 
-### 1. Packaging the Spark Project
+### 2. Alternatively do it manually if you face any issues
 ```bash
 sbt sparkStreamingApp/clean sparkStreamingApp/assembly
 ```
 
-### 2. Copy the Built JAR File into the Spark Master Container
+#### 2.1: Copy the Built JAR File into the Spark Master Container
 ```bash
-docker cp . spark-master:/opt/bitnami/spark/work/kafka-spark-streaming
+docker cp spark-streaming-app/target spark-master:/opt/bitnami/spark/work/kafka-spark-streaming
 ```
 
-### 3. Find the Spark Master Container Name or ID
+#### 2.2: Find the Spark Master Container Name or ID
 ```bash
 docker ps
 ```
 
-### 4. Open a Bash Shell in the Spark Master Container
+#### 2.3: Open a Bash Shell in the Spark Master Container
 ```bash
 docker compose exec -it <container-name-or-id> bash
 ```
 
-### 5. Submit the Spark Job
+#### 2.4: Submit the Spark Job
 ```bash
 spark-submit \
   --packages org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.0 \

@@ -19,10 +19,10 @@ kappa/.bloop/
 *.ipr
 *.iws
 *.hprof
-
+export.ndjson
 # Archive files
 archive/
-
+kubernetes
 # OS-specific files
 .DS_Store
 Thumbs.db
